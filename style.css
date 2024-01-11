@@ -115,11 +115,12 @@ button {
 
 /* ENDING OF RESET */
 
-
 body {
     font-family: sans-serif, Arial, Helvetica;
     font-size: 16px;
     line-height: 1;
+    margin: 0;
+    padding: 0;
 }
 
 main {
@@ -130,10 +131,66 @@ h1 {
     text-align: center;
 }
 
+.choose-msg {
+    text-align: center;
+    margin: 2rem auto;
+}
+
 .hidden {
     display: none;
 }
 
-section {
+section.user-options {
     background-color: #fff;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+section.user-options p {
+    margin: 2.5rem auto;
+    text-align: center;
+}
+
+section.user-options button {
+    width: 10rem;
+    transition: background-color 0.3s ease;
+}
+
+section button:hover {
+    background-color: #eee;
+}
+
+section.score {
+    color: #eee;
+    text-align: center;
+}
+
+section.score #message {
+    margin: 2rem auto;
+    font-size: 2rem;
+}
+
+section.score #reset-wrapper button {
+    background-color: beige;
+    border: 1px solid #000;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+section.score #reset-wrapper button:hover {
+    background-color: #eee;
+}
+
+section.score > p {
+    margin: 2rem auto;
+}
+
+section.score .scores {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 }
