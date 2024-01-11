@@ -1,5 +1,4 @@
 function game() {
-
     // DOM elements
     const scissors = document.querySelector("#scissors");
     const rock = document.querySelector("#rock");
@@ -9,16 +8,8 @@ function game() {
     const playerScore = document.querySelector("#user-score span");
     const computerScore = document.querySelector("#computer-score span");
 
-    console.log({
-        scissors,
-        rock,
-        paper,
-        message,
-        playerScore,
-        computerScore,
-    })
-
     const options = ["rock", "paper", "scissors"];
+    const MAX_SCORE = 5;
 
     const getComputerChoice = () => {
         const randomNumber = Math.floor(Math.random() * 3);
@@ -30,14 +21,28 @@ function game() {
         playRound(playerChoice, computerChoice);
     };
 
+    function toggleDisableButtons(option) {
+        [scissors, rock, paper].forEach((button) => {
+            button.disabled = option;
+        });
+    }
+
+    // Event listeners
+    [scissors, rock, paper].forEach((button) => {
+        button.addEventListener("click", () => {
+            handlePlayerChoice(button.id);
+        });
+    });
+
     function resetGame() {
         playerScore.textContent = 0;
         computerScore.textContent = 0;
         message.textContent = "";
         const resetButton = document.querySelector("#reset-wrapper button");
         resetButton.remove();
-    }
 
+        toggleDisableButtons(false);
+    }
 
     function createResetButton() {
         const resetButton = document.createElement("button");
@@ -49,26 +54,29 @@ function game() {
         resetWrapper.appendChild(resetButton);
     }
 
-
     function chekForGameOver() {
-        if (parseInt(playerScore.textContent) === 5) {
-            message.textContent = "You won the game!";
+        const playerScoreValue = parseInt(playerScore.textContent);
+        const computerScoreValue = parseInt(computerScore.textContent);
 
+        if (
+            playerScoreValue === MAX_SCORE ||
+            computerScoreValue === MAX_SCORE
+        ) {
             createResetButton();
-            return;
-        }
+            toggleDisableButtons(true);
 
-        if (parseInt(computerScore.textContent) === 5) {
+            if (playerScoreValue === MAX_SCORE) {
+                message.textContent = "You won the game!";
+                return;
+            }
+
             message.textContent = "You lost the game! Try again!";
-            createResetButton();
+
             return;
         }
     }
 
-
     function playRound(playerSelection, computerSelection) {
-        message.textContent = `You chose ${playerSelection} and computer chose ${computerSelection}`;
-
         // Tie
         if (playerSelection === computerSelection) {
             message.textContent = "It's a tie!";
@@ -96,13 +104,6 @@ function game() {
 
         chekForGameOver();
     }
-
-    // Event listeners
-    [scissors, rock, paper].forEach((button) => {
-        button.addEventListener("click", () => {
-            handlePlayerChoice(button.id);
-        });
-    });
 }
 
 window.onload = function () {
